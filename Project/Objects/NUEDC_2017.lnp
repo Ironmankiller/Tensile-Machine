@@ -27,6 +27,7 @@
 ".\objects\uart4.o"
 ".\objects\escon.o"
 ".\objects\adc.o"
+".\objects\ads1255.o"
 ".\objects\startup_stm32f40_41xxx.o"
 ".\objects\system_stm32f4xx.o"
 ".\objects\misc.o"

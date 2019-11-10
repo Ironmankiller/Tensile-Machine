@@ -107,7 +107,7 @@ void BSP_Init(uint32_t uart_bound, uint8_t delay_sysclk)
     
     /* 电机初始化 */ 
     ESCON_Init();
-    ESCON_PWM_Set(-3250);
+    ESCON_PWM_Set(0);
 
     /* UART1初始化 */
     usart1_init(115200);
@@ -123,7 +123,6 @@ void BSP_Init(uint32_t uart_bound, uint8_t delay_sysclk)
     delay_ms(900);
     Beep_Play(100);
     LED_ALL_OFF();
-    while(1);
 }
 
 /******************* (C) COPYRIGHT 2016 DGVY **********END OF FILE***********/
