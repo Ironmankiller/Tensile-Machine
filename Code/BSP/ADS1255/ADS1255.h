@@ -3,12 +3,35 @@
 /********************************************************************/
 #include "stm32f4xx.h"
 /*****************************************************************************
+                             Define                                  
+*****************************************************************************/
+//----------write------------------
+
+#define ADS1255_Write_SCLK_H GPIO_SetBits(GPIOF, GPIO_Pin_0)
+#define ADS1255_Write_SCLK_L GPIO_ResetBits(GPIOF,GPIO_Pin_0)	
+	
+#define ADS1255_Write_CS_H GPIO_SetBits(GPIOF, GPIO_Pin_3)
+#define ADS1255_Write_CS_L GPIO_ResetBits(GPIOF,GPIO_Pin_3)	
+
+#define ADS1255_Write_RST_H GPIO_SetBits(GPIOF, GPIO_Pin_5)
+#define ADS1255_Write_RST_L GPIO_ResetBits(GPIOF,GPIO_Pin_5)		
+	
+#define ADS1255_Write_DIN_H GPIO_SetBits(GPIOF, GPIO_Pin_1)
+#define ADS1255_Write_DIN_L GPIO_ResetBits(GPIOF,GPIO_Pin_1)	
+
+#define ADS1255_Write_SYNC_H GPIO_SetBits(GPIOF, GPIO_Pin_6)
+#define ADS1255_Write_SYNC_L GPIO_ResetBits(GPIOF,GPIO_Pin_6)	
+//----------read------------------
+#define ADS1255_Read_DOUT GPIO_ReadInputDataBit(GPIOF,GPIO_Pin_2)
+#define ADS1255_Read_DRDY GPIO_ReadInputDataBit(GPIOF,GPIO_Pin_4)
+
+/*****************************************************************************
                         Function Declare                                  
 *****************************************************************************/
+void ADS1255_GPIO_Init(void);
 
-
-void ads1255_delayus(u16 time);//功能:软件粗略延时1us
-void ads1255_delayms(u16 time);//功能:软件粗略延时1ms
+void ADS1255_delayus(u16 time);//功能:软件粗略延时1us
+void ADS1255_delayms(u16 time);//功能:软件粗略延时1ms
 
 u8 ADS1255_Init(void);         //功能:寄存器设置初始化,如果初始化成功返回0，失败返回1
 u32 ADS1255_Read_a_Data(void); //功能:读一次24位转化数据
@@ -18,8 +41,8 @@ double ADS1255_DataFormatting(u32 Data , double Vref ,u8 PGA);
 ///功能:把读数转化成电压值,输入分别为 ： 读回的二进制值   参考电压   内置增益
 
 u8 ADS1255_DRDY(void);         //功能：读DRDY引脚状态
-void ADS1255_write_reg(u8 ADS1255_command,u8 ADS1255_data);//功能:向ADS1256中对应寄存器地址写一字节数据
-u8 ADS1255_read_reg(u8 ADS1255_command);                   //功能:向ADS1256中对应寄存器读一字节数据
+void ADS1255_write_reg(u8 ADS1255_command,u8 ADS1255_data);//功能:向ADS1255中对应寄存器地址写一字节数据
+u8 ADS1255_read_reg(u8 ADS1255_command);                   //功能:向ADS1255中对应寄存器读一字节数据
 
 void ADS1255_write_bit(u8 temp);//功能:写一字节数据
 u8 ADS1255_read_bit(void);      //功能:读一字节数据

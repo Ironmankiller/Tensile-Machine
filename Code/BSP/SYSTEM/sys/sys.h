@@ -1,4 +1,4 @@
-﻿#ifndef __SYS_H
+#ifndef __SYS_H
 #define __SYS_H	 
 #include "stm32f4xx.h" 
  
@@ -7,7 +7,7 @@
 //1,支持ucos
 #define SYSTEM_SUPPORT_OS		0		//定义系统文件夹是否支持UCOS
 
-#define DEBUG_PORT_SELECT 4
+#define DEBUG_PORT_SELECT 1
 #if DEBUG_PORT_SELECT == 1
 #define DEBUG(string)       u1_printf(string);
 #elif DEBUG_PORT_SELECT == 2

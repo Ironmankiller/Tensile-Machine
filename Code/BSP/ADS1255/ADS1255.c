@@ -1,27 +1,6 @@
 #include "ADS1255.h"
 
-//----------write------------------
-
-#define ADS1255_Write_SCLK_H GPIO_SetBits(GPIOF, GPIO_Pin_0)
-#define ADS1255_Write_SCLK_L GPIO_ResetBits(GPIOF,GPIO_Pin_0)	
-	
-#define ADS1255_Write_CS_H GPIO_SetBits(GPIOF, GPIO_Pin_3)
-#define ADS1255_Write_CS_L GPIO_ResetBits(GPIOF,GPIO_Pin_3)	
-
-#define ADS1255_Write_RST_H GPIO_SetBits(GPIOF, GPIO_Pin_5)
-#define ADS1255_Write_RST_L GPIO_ResetBits(GPIOF,GPIO_Pin_5)		
-	
-#define ADS1255_Write_DIN_H GPIO_SetBits(GPIOF, GPIO_Pin_1)
-#define ADS1255_Write_DIN_L GPIO_ResetBits(GPIOF,GPIO_Pin_1)	
-
-#define ADS1255_Write_SYNC_H GPIO_SetBits(GPIOF, GPIO_Pin_6)
-#define ADS1255_Write_SYNC_L GPIO_ResetBits(GPIOF,GPIO_Pin_6)	
-//----------read------------------
-#define ADS1255_Read_DOUT GPIO_ReadInputDataBit(GPIOF,GPIO_Pin_2)
-#define ADS1255_Read_DRDY GPIO_ReadInputDataBit(GPIOF,GPIO_Pin_4)
-
-//---------------------------------------------------------------
-void GPIO_DataBus_Init(void)//初始化
+void ADS1255_GPIO_Init(void)//初始化
 {
   	GPIO_InitTypeDef GPIO_InitDataBus;
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOF, ENABLE);
@@ -58,7 +37,7 @@ void GPIO_DataBus_Init(void)//初始化
 延时uS  
 *****************************************/
 
-void ads1255_delayus(u16 time)						  
+void ADS1255_delayus(u16 time)						  
 {
 	u16 i=0;
 	while(time--)
@@ -71,7 +50,7 @@ void ads1255_delayus(u16 time)
 /****************************************
 功能：延时Ms
 *****************************************/
-void ads1255_delayms(u16 time)
+void ADS1255_delayms(u16 time)
 {
  u16 i;
  while(time--)
@@ -96,9 +75,9 @@ void ADS1255_write_bit(u8 temp)
 		else
 			ADS1255_Write_DIN_L;
 		temp=temp<<1;
-		ads1255_delayus(1);	 
+		ADS1255_delayus(1);	 
 		ADS1255_Write_SCLK_L;
-		ads1255_delayus(1);
+		ADS1255_delayus(1);
 	}
 }
 
@@ -108,16 +87,16 @@ void ADS1255_write_bit(u8 temp)
 
 u8 ADS1255_read_bit(void)
 {
- u8 i;
- u8 date;
+    u8 i;
+    u8 date;
 	for(i=0;i<8;i++)
 	{
 		ADS1255_Write_SCLK_H;
 		date=date<<1;
-		ads1255_delayus(1);
+		ADS1255_delayus(1);
 		ADS1255_Write_SCLK_L;
 		date= date | ADS1255_Read_DOUT;
-		ads1255_delayus(1);
+		ADS1255_delayus(1);
 	}
   return date;
 }
@@ -258,7 +237,7 @@ void ADS1255_write_reg(u8 ADS1255_command,u8 ADS1255_data)
 	ADS1255_write_bit(ADS1255_command | 0x50);
 	ADS1255_write_bit(0x00);
 	ADS1255_write_bit(ADS1255_data);
-	ads1255_delayms(2);
+	ADS1255_delayms(2);
 }
 
 
@@ -270,10 +249,10 @@ void ADS1255_write_reg(u8 ADS1255_command,u8 ADS1255_data)
 u8 ADS1255_read_reg(u8 ADS1255_command)
 {
   u8 reg_date;
-	while(ADS1255_Read_DRDY);
+  while(ADS1255_Read_DRDY);
   ADS1255_write_bit(ADS1255_command | 0x10);
   ADS1255_write_bit(0x00);
-  ads1255_delayus(50);
+  ADS1255_delayus(50);
   reg_date=ADS1255_read_bit();
   return reg_date;
 }
@@ -292,49 +271,52 @@ u8 ADS1255_Init(void)
 				                   0x03,  //数据速度寄存器初始化值	
 				                   0x00, //I/O控制寄存器初始化值
 													};
+    
+    ADS1255_GPIO_Init();               //初始化ADS1255GPIO
+                                                    
 	ADS1255_Write_CS_H;
 	ADS1255_Write_SYNC_H;
 	ADS1255_Write_SCLK_L;
 	ADS1255_Write_RST_L;
-	ads1255_delayms(1);
+	ADS1255_delayms(1);
 	ADS1255_Write_RST_H;
-	ads1255_delayms(1);
+	ADS1255_delayms(1);
 	ADS1255_Write_CS_L;	
-	ads1255_delayms(1);												
+	ADS1255_delayms(1);												
 													
 	ADS1255_write_reg(0x00,ADS1255_reg_Init[0]);//状态寄存器初始化
-	ads1255_delayus(1);
+	ADS1255_delayus(1);
 	
 	ADS1255_write_reg(0x01,ADS1255_reg_Init[1]);//模拟多路选择器初始化
-	ads1255_delayus(1);
+	ADS1255_delayus(1);
 	
 	ADS1255_write_reg(0x02,ADS1255_reg_Init[2]);//AD控制寄存器初始化
-	ads1255_delayus(1);
+	ADS1255_delayus(1);
 	
 	ADS1255_write_reg(0x03,ADS1255_reg_Init[3]);//数据速度寄存器初始化	
-	ads1255_delayus(1);
+	ADS1255_delayus(1);
 	
 	ADS1255_write_reg(0x04,ADS1255_reg_Init[4]);//I/O控制寄存器初始化
-	ads1255_delayus(1);
+	ADS1255_delayus(1);
 	
   if(ADS1255_reg_Init[1] != ADS1255_read_reg(0x01))  ReturnData = 1;
 
   if(ADS1255_reg_Init[2] != ADS1255_read_reg(0x02))  ReturnData = 1;
-	ads1255_delayus(1);
+	ADS1255_delayus(1);
 	
   if(ADS1255_reg_Init[3] != ADS1255_read_reg(0x03))  ReturnData = 1;
-	ads1255_delayus(1);
+	ADS1255_delayus(1);
 	
   if(ADS1255_reg_Init[4] != ADS1255_read_reg(0x04))  ReturnData = 1;
-	ads1255_delayus(1);
+	ADS1255_delayus(1);
 	
 	while(ADS1255_Read_DRDY);	
 	ADS1255_SELFCAL();	//补偿和增益自校准
-	ads1255_delayus(5);
+    ADS1255_delayus(5);
 	ADS1255_SYNC();     //AD转换同步
-	ads1255_delayms(20);
+	ADS1255_delayms(20);
 	ADS1255_WAKEUP();   //退出待机模式
-	ads1255_delayus(5);	
+	ADS1255_delayus(5);	
 	
 	return(ReturnData);
 }

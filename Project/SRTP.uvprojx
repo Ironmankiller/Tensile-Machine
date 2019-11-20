@@ -722,6 +722,11 @@
               <FileType>1</FileType>
               <FilePath>..\Code\main.c</FilePath>
             </File>
+            <File>
+              <FileName>readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\readme.md</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

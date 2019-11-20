@@ -48,6 +48,7 @@
 #include "BSP\Mecanum\Mecanum.h"
 #include "BSP\ESCON\ESCON.h"
 #include "BSP\MCU\ADC\ADC.h"
+#include "BSP\ADS1255\ADS1255.h"
 //-----------------------------------------------------------------------------
 // Private Define
 //-----------------------------------------------------------------------------
@@ -102,8 +103,6 @@ void BSP_Init(uint32_t uart_bound, uint8_t delay_sysclk)
     
     /* 编码器初始化 */ 
     //Encoder_Init_TIM8();
-    /* ADC初始化 */
-    Adc_Init();
     
     /* 电机初始化 */ 
     ESCON_Init();
@@ -119,6 +118,17 @@ void BSP_Init(uint32_t uart_bound, uint8_t delay_sysclk)
     uart4_init(115200);
     /* UART5初始化 */
     usart5_init(115200);
+    
+        /* ADC初始化 */
+    if(ADS1255_Init()) {
+        DEBUG("ADS1255 init failed....\r\n");
+    } else {
+        DEBUG("ADS1255 init success....\r\n");
+    }
+//    if(ADS1255_Init())     //初始化ADS1256的寄存器
+//		DEBUG("ADS1255初始化失败......");
+//	else
+//		DEBUF("ADS1255初始化成功......");
 
     delay_ms(900);
     Beep_Play(100);
