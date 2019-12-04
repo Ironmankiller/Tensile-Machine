@@ -9,9 +9,9 @@
 ####AD1255 REGISTER MAP####
 **STATUS : STATUS REGISTER (ADDRESS 00h)**
 
-| BIT7 | BIT6 | BIT5 | BIT4 | BIT3 | BIT2 | BIT1 | BIT0 |
-|------|------|------|------|------|------|------|------|
-| ID | ID | ID | ID | ORDER | ACAL | BUFEN | DRDY |
+| BIT7 | BIT6 | BIT5 | BIT4 | BIT3  | BIT2 | BIT1  | BIT0 |
+| ---- | ---- | ---- | ---- | ----- | ---- | ----- | ---- |
+| ID   | ID   | ID   | ID   | ORDER | ACAL | BUFEN | DRDY |
 
 Bits 7-4 **ID3, ID2, ID1**, ID0 Factory Programmed Identification Bits (Read Only)
 
@@ -34,8 +34,8 @@ Bit 0 **DRDY**: Data Ready (Read Only)
 
 **MUX : Input Multiplexer Control Register (Address 01h)**
 
-| BIT7 | BIT6 | BIT5 | BIT4 | BIT3 | BIT2 | BIT1 | BIT0 |
-|------|------|------|------|------|------|------|------|
+| BIT7  | BIT6  | BIT5  | BIT4  | BIT3  | BIT2  | BIT1  | BIT0  |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
 | PSEL3 | PSEL2 | PSEL1 | PSEL0 | NSEL3 | NSEL2 | NSEL1 | NSEL0 |
 Bits 7-4 **PSEL3, PSEL2, PSEL1, PSEL0**: Positive Input Channel (AINP) Select
 &emsp; 0000 = AIN0 (default)
@@ -61,9 +61,9 @@ Bits 3-0 **NSEL3, NSEL2, NSEL1, NSEL0**: Negative Input Channel (AINN)Select
 
 **ADCON: A/D Control Register (Address 02h)**
 
-| BIT7 | BIT6 | BIT5 | BIT4 | BIT3 | BIT2 | BIT1 | BIT0 |
-|------|------|------|------|------|------|------|------|
-| 0 | CLK1 | CLK0 | SDCS1 | SDCS0 | PGA2 | PGA1 | PGA0 |
+| BIT7 | BIT6 | BIT5 | BIT4  | BIT3  | BIT2 | BIT1 | BIT0 |
+| ---- | ---- | ---- | ----- | ----- | ---- | ---- | ---- |
+| 0    | CLK1 | CLK0 | SDCS1 | SDCS0 | PGA2 | PGA1 | PGA0 |
 Bit 7 Reserved, always 0 (Read Only)
 
 Bits 6-5 **CLK1, CLK0**: D0/CLKOUT Clock Out Rate Setting
@@ -94,8 +94,8 @@ Bits 2-0 **PGA2, PGA1, PGA0**: Programmable Gain Amplifier Setting
 **DRATE: A/D Data Rate (Address 03h)**
 
 | BIT7 | BIT6 | BIT5 | BIT4 | BIT3 | BIT2 | BIT1 | BIT0 |
-|------|------|------|------|------|------|------|------|
-| DR7 | DR6 | DR5 | DR4 | DR3 | DR2 | DR1 | DR0 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| DR7  | DR6  | DR5  | DR4  | DR3  | DR2  | DR1  | DR0  |
 
 &emsp;The 16 valid Data Rate settings are shown below. Make sure to select a valid setting as the invalid settings may produce unpredictable results.
 Bits 7-0 **DR[7: 0]**: Data Rate Setting(1)
@@ -120,7 +120,7 @@ Bits 7-0 **DR[7: 0]**: Data Rate Setting(1)
 **I/O: GPIO Control Register (Address 04H)**
 
 | BIT7 | BIT6 | BIT5 | BIT4 | BIT3 | BIT2 | BIT1 | BIT0 |
-|------|------|------|------|------|------|------|------|
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | DIR3 | DIR2 | DIR1 | DIR0 | DIO3 | DIO2 | DIO1 | DIO0 |
 
 &emsp; The states of these bits control the operation of the general-purpose digital I/O pins. The ADS1256 has 4 I/O pins: D3, D2, D1, and D0/CLKOUT. The ADS1255 has two digital I/O pins: D1 and D0/CLKOUT. When using an ADS1255, the register bits DIR3, DIR2, DIO3, and DIO2 can be read from and written to but have no effect.
@@ -138,3 +138,5 @@ Bit 4 **DIR0**, Digital I/O Direction for Digital I/O Pin D0/CLKOUT
 &emsp; 1 = D0/CLKOUT is an input
 Bits 3-0 **DI0[3:0]**: Status of Digital I/O Pins D3, D2, D1, D0/CLKOUT
 &emsp; Reading these bits will show the state of the corresponding digital I/O pin, whether if the pin is configured as an input or output by DIR3-DIR0. When the digital I/O pin is configured as an output by the DIR bit, writing to the corresponding DIO bit will set the output state. When the digital I/O pin is configured as an input by the DIR bit, writing to the corresponding DIO bit will have no effect. When DO/CLKOUT is configured as an output and CLKOUT is enabled (using CLK1, CLK0 bits in the ADCON register), writing to DIO0 will have no effect.
+###12月4日
+添加了拉伸实验机的速度控制代码，重构了拉伸试验机的结构体，ADS1255可以读出数据。

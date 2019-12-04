@@ -32,3 +32,14 @@
 .\objects\ads1255.o: ..\Code\STLIB\FWLIB\inc\stm32f4xx_rng.h
 .\objects\ads1255.o: ..\Code\STLIB\FWLIB\inc\stm32f4xx_can.h
 .\objects\ads1255.o: ..\Code\STLIB\FWLIB\inc\stm32f4xx_dcmi.h
+.\objects\ads1255.o: ..\Code\BSP\SYSTEM\delay\delay.h
+.\objects\ads1255.o: ..\Code\BSP\SYSTEM\usart\Printf_Uart.h
+.\objects\ads1255.o: F:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\ads1255.o: ..\Code\BSP\SYSTEM\sys\sys.h
+.\objects\ads1255.o: ..\Code\BSP\SYSTEM\My_Flag.h
+.\objects\ads1255.o: ..\Code\APP\Math\My_Math.h
+.\objects\ads1255.o: F:\keil5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\ads1255.o: F:\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\ads1255.o: F:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\ads1255.o: ..\Code\STLIB\DSPLIB\Include\arm_math.h
+.\objects\ads1255.o: ..\Code\STLIB\DSPLIB\Include\core_cm4.h

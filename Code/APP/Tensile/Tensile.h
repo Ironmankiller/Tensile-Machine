@@ -1,7 +1,37 @@
 #ifndef __Tensile_H_
 #define __Tensile_H_
-
+#include "sys.h"
 #include "BSP\SYSTEM\My_Flag.h"
+
+/* 位移传感器信息 */
+typedef struct{
+    
+    double position;             //当前位移(um)
+    double target_postion;
+    double offset_position;
+    
+    double velocity;             //试样速度(um/s)
+    double target_velocity;
+    double offset_velocity;
+    
+    int32_t range;              //量程(mm)
+    int32_t output_max;         //输出最大值(V)
+    int32_t output_min;         //输出最小值(V)
+
+}sLVDT_Typedef;
+
+/* 拉力传感器信息 */
+typedef struct{
+    
+    double tension;             //当前拉力(N)
+    double target_tension;
+    double offset_tension;
+    
+    int32_t range;              //量程(N)
+    int32_t output_max;         //输出最大值(V)
+    int32_t output_min;         //输出最小值(V)
+
+}sTensionSensor_Typedef;
 
 enum Tensile_state{
     Running,
@@ -11,20 +41,16 @@ enum Tensile_state{
 
 enum Tensile_Mode{
     CVelocity,                  //恒速度模式
-    CStrength                   //恒拉力模式
+    CTension                   //恒拉力模式
 };
 
 /* 拉伸实验机信息 */
 typedef struct
 {
-    float velocity;             //试样位移(us/s)
-    float strength;             //对试样施加的拉力(N)
     
-    float target_velocity;
-    float target_strength;
+    sLVDT_Typedef LVDT;         //位移传感器实体
     
-    float offset_velocity;
-    float offset_strength;
+    sTensionSensor_Typedef TensionSensor;    //拉力传感器实体
 
     enum Tensile_state state;   //机器运行状态
     enum Tensile_Mode mode;     //机器运行方式
@@ -38,13 +64,19 @@ extern sTensile_Typedef Tensile;     //小车信息
 void Tensile_Init(void);
 
 /**********************************************
-* 拉伸实验机参数初更新
-**********************************************/
-void Tensile_Param_Update(float velocity, float strength);
-
-/**********************************************
 * 拉伸实验机传感器数据校准
 **********************************************/
 void Tensile_Calibrate(void);
+
+/**********************************************
+* 读拉力传感器
+**********************************************/
+void Tensile_Read_TensionSensor(void);
+
+/**********************************************
+* 读位移传感器
+**********************************************/
+void Tensile_Read_LVDT(void);
+
 
 #endif /* __Tensile_H_ */

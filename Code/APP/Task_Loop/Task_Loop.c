@@ -22,6 +22,7 @@
 #include "BSP\MCU\UART\usart5.h"
 #include "BSP\MCU\ADC\ADC.h"
 #include "BSP\ESCON\ESCON.h"
+#include "BSP\ADS1255\ADS1255.h"
 
 
 /* 任务循环计时结构体 */
@@ -114,7 +115,7 @@ __INLINE static void Task_2ms(void)
 **********************************************/
 __INLINE static void Task_5ms(void)
 {
-    //Tensile_Param_Update();
+
 }
 
 /**********************************************
@@ -122,13 +123,16 @@ __INLINE static void Task_5ms(void)
 **********************************************/
 __INLINE static void Task_10ms(void)
 {   
+    
+    Tensile_Read_LVDT();
+    
     switch(Tensile.state)
     {
         case Running:
             if(Tensile.mode == CVelocity){
                 Control_Velocity();
             }
-            else if(Tensile.mode == CStrength){
+            else if(Tensile.mode == CTension){
                 Control_Strength();
             }
             break;
@@ -181,9 +185,11 @@ __INLINE static void Task_50ms(void)
     {
     case 2:
         LED_SWITCH(LED_1);
+        Tensile.state = Running;
         break;
     case 3:
         LED_SWITCH(LED_2);
+        Tensile.state = Stop;
         break;
     case 4:
         LED_SWITCH(LED_3);

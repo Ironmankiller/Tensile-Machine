@@ -60,6 +60,7 @@
 //===============================================================================
 
 
+
 //-----------------------------------------------------------------------------
 // Extern Function
 // 外部函数
@@ -102,7 +103,7 @@ void BSP_Init(uint32_t uart_bound, uint8_t delay_sysclk)
     KEY_Init();
     
     /* 编码器初始化 */ 
-    //Encoder_Init_TIM8();
+    Encoder_Init_TIM8();
     
     /* 电机初始化 */ 
     ESCON_Init();
@@ -111,24 +112,23 @@ void BSP_Init(uint32_t uart_bound, uint8_t delay_sysclk)
     /* UART1初始化 */
     usart1_init(115200);
     /* UART2初始化 */
-    usart2_init(115200);
+    //usart2_init(115200);
     /* UART3初始化 */        /* 警告：一定先初始化电机pwm再初始化串口，否则pwm可能无法输出 */
-    usart3_init(115200);
+    //usart3_init(115200);
     /* UART4初始化 */
-    uart4_init(115200);
+    //uart4_init(115200);
     /* UART5初始化 */
-    usart5_init(115200);
+    //usart5_init(115200);
     
-        /* ADC初始化 */
-    if(ADS1255_Init()) {
-        DEBUG("ADS1255 init failed....\r\n");
-    } else {
-        DEBUG("ADS1255 init success....\r\n");
+    /* ADC初始化 */
+	if(ADS1255_Init()!=0){     //初始化ADS1256的寄存器
+		DEBUG("ADS1255 Init Fail......\r\n");
     }
-//    if(ADS1255_Init())     //初始化ADS1256的寄存器
-//		DEBUG("ADS1255初始化失败......");
-//	else
-//		DEBUF("ADS1255初始化成功......");
+	else{
+		DEBUG("ADS1255 Init Success......\r\n");	
+    }
+
+	u1_printf("%f\r\n",ReadASingleData(0x01,0x00));     //连续采集8个数据并发送到上位机,A1为Vp,A0为Vn
 
     delay_ms(900);
     Beep_Play(100);

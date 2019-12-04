@@ -75,7 +75,5 @@
 .\objects\algorithm.o: ..\Code\BSP\SYSTEM\My_Flag.h
 .\objects\algorithm.o: ..\Code\APP\ANO_DT\ANO_DT.h
 .\objects\algorithm.o: ..\Code\BSP\Motor_Drive\Steer_Moto.h
-.\objects\algorithm.o: ..\Code\BSP\Mecanum\Mecanum.h
-.\objects\algorithm.o: ..\Code\BSP\PS2\PS2.h
-.\objects\algorithm.o: F:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\objects\algorithm.o: ..\Code\BSP\SYSTEM\delay\delay.h
+.\objects\algorithm.o: ..\Code\APP\Tensile\Tensile.h
+.\objects\algorithm.o: ..\Code\BSP\ESCON\ESCON.h

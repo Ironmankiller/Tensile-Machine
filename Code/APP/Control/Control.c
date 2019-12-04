@@ -20,6 +20,11 @@ Flag Init_flag = MY_TRUE;
 **********************************************/
 void Control_Velocity(void){
     
+    if(Init_flag == MY_TRUE) {
+        Init_flag = MY_FALSE;
+        pid_setup_velocity(Tensile.LVDT.target_velocity);
+    }
+    pid_ctr_velocity();
 }
 
 /**********************************************

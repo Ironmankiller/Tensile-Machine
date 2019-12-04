@@ -48,8 +48,8 @@
 /**********************************************
 * 定义HMI控制的PID参数数组
 **********************************************/
-#define HMI_PID1	pidmotorAspeedparm
-#define HMI_PID2	pidmotorBspeedparm
+#define HMI_PID1	pidvelocityparam
+#define HMI_PID2    pidtensionparam
 
 /**********************************************
 * 发送HMI指令

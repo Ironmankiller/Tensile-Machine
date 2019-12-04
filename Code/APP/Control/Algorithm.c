@@ -22,172 +22,27 @@
 #include "APP\Control\param.h"
 #include "BSP\MPU6050\MPU6050.h"
 #include "BSP\Motor_Drive\Steer_Moto.h"
-#include "BSP\Mecanum\Mecanum.h"
+#include "APP\Tensile\Tensile.h"
+#include "BSP\ESCON\ESCON.h"
 
-void pid_setup_mecanum_speed()
+void pid_setup_velocity(double target)
+{
+    update_pid_param(&pid_velocity,pidvelocityparam,target);
+}
+
+void pid_ctr_velocity(void)
+{
+    float value;
+    value = pid_inc_calc(&pid_velocity, Tensile.LVDT.velocity);
+    ESCON_PWM_Set(value);
+}
+
+void pid_setup_tension(double target)
+{
+	update_pid_param(&pid_tension,pidtensionparam,target);
+}
+
+void pid_ctr_tension(void)
 {
 
 }
-void pid_setup_mecanum_position()
-{
-
-}
-
-void pid_ctr_mecanum_speed(int Encode_A,int Encode_B,int Encode_C,int Encode_D)
-{
-
-
-}
-void pid_ctr_mecanum_position(int Position_A,int Position_B,int Position_C,int Position_D)
-{
-
-}
-void pid_setup_speed(void)
-{
-
-}
-
-void pid_ctr_speed(void)
-{
-
-}
-
-void pid_setup_angle(float target)
-{
-	
-}
-
-void pid_ctr_angle(void)
-{
-
-}
-
-
-/*--------------------------------------------------------
-                       Y_PID_Angle
-   --------------------------------------------------------*/
-void pid_setup_angle_y(float Ytarget)
-{
-
-}
-
-void pid_ctr_angle_y(void)
-{
-
-}
-
-/*--------------------------------------------------------
-                       X_PID_Angle
-   --------------------------------------------------------*/
-void pid_setup_angle_x(float Xtarget)
-{
-
-}
-
-void pid_ctr_angle_x(void)
-{
-
-}
-
-/*--------------------------------------------------------
-                         Y_PID
-   --------------------------------------------------------*/
-void pid_setup_y(float Ytarget)
-{
-
-}
-
-void pid_ctr_y(void)
-{
-
-}
-
-/*Fuzzy PID*/
-void fuzzy_ctr_y(void)
-{
-
-}
-
-
-/*--------------------------------------------------------
-                          X_PID
-   --------------------------------------------------------*/
-void pid_setup_x(float Xtarget)
-{
-
-}
-
-
-
-void pid_ctr_x(void)
-{
-
-
-}
-/*Fuzzy PID*/
-void fuzzy_ctr_x(void)
-{
-
-}
-
-
-/*--------------------------------------------------------
-                       Y_PID_Speed
-   --------------------------------------------------------*/
-void pid_setup_speed_y(float Ytarget)
-{
-
-}
-
-void pid_ctr_speed_y(void)
-{
-
-}
-
-/*--------------------------------------------------------
-                         X_PID_Speed
-   --------------------------------------------------------*/
-void pid_setup_speed_x(float Xtarget)
-{
-
-}
-
-void pid_ctr_speed_x(void)
-{
-
-}
-
-
-
-/*--------------------------------------------------------
-   Y_Forward
-   --------------------------------------------------------*/
-/*初始化Y直线前馈参数*/
-void forward_setup_y(float Ytarget)
-{
-
-}
-
-//Y直线前馈控制
-void forward_ctr_y(void)
-{
-
-
-}
-
-
-/*--------------------------------------------------------
-   X_Forward
-   --------------------------------------------------------*/
-/*初始化X直线前馈参数*/
-void forward_setup_x(float Xtarget)
-{
-
-}
-
-//X直线前馈控制
-void forward_ctr_x(void)
-{
-
-}
-/******************* (C) COPYRIGHT 2017 ZB ***********END OF FILE***********/

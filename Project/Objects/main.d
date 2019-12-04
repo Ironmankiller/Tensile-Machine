@@ -39,3 +39,4 @@
 .\objects\main.o: ..\Code\APP\ANO_DT\ANO_DT.h
 .\objects\main.o: ..\Code\BSP\Time\Time.h
 .\objects\main.o: ..\Code\APP\Tensile\Tensile.h
+.\objects\main.o: ..\Code\BSP\SYSTEM\usart\Printf_Uart.h

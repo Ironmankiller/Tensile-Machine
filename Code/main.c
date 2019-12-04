@@ -5,7 +5,8 @@
 #include "APP\ANO_DT\ANO_DT.h"
 #include "BSP\Time\Time.h"
 #include "APP\Tensile\Tensile.h"
-
+#include "Printf_Uart.h"
+void ReadASingleData(u8 AINP,u8 AINN);
 static void System_Init(void);       // 系统初始化
 /**********************************************
 * 主函数 
@@ -27,6 +28,7 @@ static void System_Init(void)
 {
     /* 硬件驱动层初始化 */
     BSP_Init(115200, 168);
+
     /* 软件层初始化 */
     Tensile_Init();
     Loop_Time_Clear();
@@ -84,19 +86,20 @@ static void System_Init(void)
 //	ADS1255_write_reg(0x01,(AINP<<4) | AINN );//通道选择器配置为A0为差分输入P,A1为差分输入N 
 //	ADS1255_write_reg(0x03,0x00);//数据速度2.5SPS
 //	ADS1255_SELFCAL();	//补偿和增益自校准
-//	ads1255_delayus(5);
+//	delay_us(5);
 //	ADS1255_SYNC();     //AD转换同步
-//	ads1255_delayms(20);
+//	delay_ms(20);
 //	ADS1255_WAKEUP();   //退出待机模式
-//	ads1255_delayus(5);	
+//	delay_us(5);	
 //	
 //	for(i=0;i<8;i++) //采集8次数据
 //	{
 //		ADS1255_RDATA();             //功能:读单次数据命令
-//		ads1255_delayus(20);         //至少延时50个ADS1256的时钟周期
+//		delay_us(20);         //至少延时50个ADS1256的时钟周期
 //		Data = ADS1255_Read_a_Data();//读取AD采样的二进制值
 //		ReadVoltage = ADS1255_DataFormatting( Data , 2.5 , 1);//参考电压2.5V,内置增益1倍 
-//		DataUart(ReadVoltage);	     //把电压值发送到上位机
+//        DEBUG("%.5f\r\n",ReadVoltage);
+//		//DataUart(ReadVoltage);	     //把电压值发送到上位机
 //	}
 
 //}
@@ -114,14 +117,14 @@ static void System_Init(void)
 //	ADS1255_write_reg(0x01,0x10);//通道选择器配置为A0为差分输入P,A1为差分输入N 
 //		ADS1255_write_reg(0x03,0x00);//数据速度2.5SPS
 //	ADS1255_SELFCAL();	//补偿和增益自校准
-//	ads1255_delayus(5);
+//	delay_us(5);
 //	ADS1255_SYNC();     //AD转换同步
-//	ads1255_delayms(20);
+//	delay_ms(20);
 //	ADS1255_WAKEUP();   //退出待机模式
-//	ads1255_delayus(5);	
+//	delay_us(5);	
 //	
 //	ADS1255_RDATAC();            //功能:连续读数据命令
-//	ads1255_delayus(20);         //至少延时50个ADS1256的时钟周期
+//	delay_us(20);         //至少延时50个ADS1256的时钟周期
 //	Data = ADS1255_Read_a_Data();//读取AD采样的二进制值
 //	ReadVoltage = ADS1255_DataFormatting( Data , 2.5 , 1);//参考电压2.5V,内置增益1倍
 //	DataUart(ReadVoltage);
@@ -159,27 +162,27 @@ static void System_Init(void)
 //	if(ReadVoltage < 0)
 //		printf("-");//如果是负数则输出负号
 //	USART_SendData(USART1, character[(u16)DData[0]]);//该函数把数据通过串口发送到上位机
-//	ads1255_delayms(10);
+//	delay_ms(10);
 //	printf(".");//小数点
-//	ads1255_delayms(10);	
+//	delay_ms(10);	
 //	USART_SendData(USART1, character[(u16)DData[1]]);//该函数把数据通过串口发送到上位机
-//	ads1255_delayms(10);
+//	delay_ms(10);
 //	USART_SendData(USART1, character[(u16)DData[2]]);//该函数把数据通过串口发送到上位机
-//	ads1255_delayms(10);
+//	delay_ms(10);
 //	USART_SendData(USART1, character[(u16)DData[3]]);//该函数把数据通过串口发送到上位机
-//	ads1255_delayms(10);
+//	delay_ms(10);
 //	USART_SendData(USART1, character[(u16)DData[4]]);//该函数把数据通过串口发送到上位机
-//	ads1255_delayms(10);
+//	delay_ms(10);
 //	USART_SendData(USART1, character[(u16)DData[5]]);//该函数把数据通过串口发送到上位机
-//	ads1255_delayms(10);
+//	delay_ms(10);
 //	USART_SendData(USART1, character[(u16)DData[6]]);//该函数把数据通过串口发送到上位机
-//	ads1255_delayms(10);
+//	delay_ms(10);
 //	USART_SendData(USART1, character[(u16)DData[7]]);//该函数把数据通过串口发送到上位机
-//	ads1255_delayms(10);
+//	delay_ms(10);
 //	USART_SendData(USART1, character[(u16)DData[8]]);//该函数把数据通过串口发送到上位机
-//	ads1255_delayms(10);	
+//	delay_ms(10);	
 //	USART_SendData(USART1, character[(u16)DData[9]]);//该函数把数据通过串口发送到上位机
-//	ads1255_delayms(10);
+//	delay_ms(10);
 //	printf("V\n");//单位V
-//	ads1255_delayms(10);
+//	delay_ms(10);
 //}

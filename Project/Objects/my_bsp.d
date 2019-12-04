@@ -83,3 +83,4 @@
 .\objects\my_bsp.o: ..\Code\BSP\ESCON\ESCON.h
 .\objects\my_bsp.o: ..\Code\BSP\MCU\ADC\ADC.h
 .\objects\my_bsp.o: ..\Code\BSP\ADS1255\ADS1255.h
+.\objects\my_bsp.o: ..\Code\BSP\SYSTEM\delay\delay.h

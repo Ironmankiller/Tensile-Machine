@@ -183,6 +183,25 @@ void Bubble_Sort(uint32_t _data[], uint32_t size)
     }
 }
 
+void DBubble_Sort(double _data[], uint32_t size)
+{
+    int i = 0;
+    int j = 0;
+    double temp = 0.0;
+    for (j = 0; j < size; j++)
+    {
+        for (i = size - 1; i > j; i--)
+        {
+            if (_data[j] < _data[i])
+            {
+                temp = _data[j];
+                _data[j] = _data[i];
+                _data[i] = temp;
+            }
+        }
+    }
+}
+
 const static float fast_atan_table[257] =
 {
     0.000000e+00, 3.921549e-03, 7.842976e-03, 1.176416e-02,

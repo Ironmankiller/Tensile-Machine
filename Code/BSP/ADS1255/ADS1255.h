@@ -2,36 +2,50 @@
 #define __DAC8563_H_H
 /********************************************************************/
 #include "stm32f4xx.h"
+#include "delay.h"
 /*****************************************************************************
                              Define                                  
 *****************************************************************************/
+//----------GPIO-------------------
+#define ADS1255_SCLK_GPIO_PORT              GPIOA
+#define ADS1255_SCLK_GPIO_CLK               RCC_AHB1Periph_GPIOA
+#define ADS1255_SCLK_GPIO_PIN               GPIO_Pin_2
+
+#define ADS1255_DIN_GPIO_PORT              GPIOA
+#define ADS1255_DIN_GPIO_CLK               RCC_AHB1Periph_GPIOA
+#define ADS1255_DIN_GPIO_PIN               GPIO_Pin_3
+
+#define ADS1255_DOUT_GPIO_PORT              GPIOB
+#define ADS1255_DOUT_GPIO_CLK               RCC_AHB1Periph_GPIOB
+#define ADS1255_DOUT_GPIO_PIN               GPIO_Pin_10
+
+#define ADS1255_DRDY_GPIO_PORT              GPIOB
+#define ADS1255_DRDY_GPIO_CLK               RCC_AHB1Periph_GPIOB
+#define ADS1255_DRDY_GPIO_PIN               GPIO_Pin_11
+
+#define ADS1255_CS_GPIO_PORT              GPIOD
+#define ADS1255_CS_GPIO_CLK               RCC_AHB1Periph_GPIOD
+#define ADS1255_CS_GPIO_PIN               GPIO_Pin_8
+
 //----------write------------------
 
-#define ADS1255_Write_SCLK_H GPIO_SetBits(GPIOF, GPIO_Pin_0)
-#define ADS1255_Write_SCLK_L GPIO_ResetBits(GPIOF,GPIO_Pin_0)	
+#define ADS1255_Write_SCLK_H GPIO_SetBits(ADS1255_SCLK_GPIO_PORT, ADS1255_SCLK_GPIO_PIN)
+#define ADS1255_Write_SCLK_L GPIO_ResetBits(ADS1255_SCLK_GPIO_PORT,ADS1255_SCLK_GPIO_PIN)	
 	
-#define ADS1255_Write_CS_H GPIO_SetBits(GPIOF, GPIO_Pin_3)
-#define ADS1255_Write_CS_L GPIO_ResetBits(GPIOF,GPIO_Pin_3)	
-
-#define ADS1255_Write_RST_H GPIO_SetBits(GPIOF, GPIO_Pin_5)
-#define ADS1255_Write_RST_L GPIO_ResetBits(GPIOF,GPIO_Pin_5)		
+#define ADS1255_Write_CS_H GPIO_SetBits(ADS1255_CS_GPIO_PORT, ADS1255_CS_GPIO_PIN)
+#define ADS1255_Write_CS_L GPIO_ResetBits(ADS1255_CS_GPIO_PORT,ADS1255_CS_GPIO_PIN)	
 	
-#define ADS1255_Write_DIN_H GPIO_SetBits(GPIOF, GPIO_Pin_1)
-#define ADS1255_Write_DIN_L GPIO_ResetBits(GPIOF,GPIO_Pin_1)	
-
-#define ADS1255_Write_SYNC_H GPIO_SetBits(GPIOF, GPIO_Pin_6)
-#define ADS1255_Write_SYNC_L GPIO_ResetBits(GPIOF,GPIO_Pin_6)	
+#define ADS1255_Write_DIN_H GPIO_SetBits(ADS1255_DIN_GPIO_PORT, ADS1255_DIN_GPIO_PIN)
+#define ADS1255_Write_DIN_L GPIO_ResetBits(ADS1255_DIN_GPIO_PORT,ADS1255_DIN_GPIO_PIN)	
+	
 //----------read------------------
-#define ADS1255_Read_DOUT GPIO_ReadInputDataBit(GPIOF,GPIO_Pin_2)
-#define ADS1255_Read_DRDY GPIO_ReadInputDataBit(GPIOF,GPIO_Pin_4)
+#define ADS1255_Read_DOUT GPIO_ReadInputDataBit(ADS1255_DOUT_GPIO_PORT,ADS1255_DOUT_GPIO_PIN)
+#define ADS1255_Read_DRDY GPIO_ReadInputDataBit(ADS1255_DRDY_GPIO_PORT,ADS1255_DRDY_GPIO_PIN)
 
 /*****************************************************************************
                         Function Declare                                  
 *****************************************************************************/
 void ADS1255_GPIO_Init(void);
-
-void ADS1255_delayus(u16 time);//¹¦ÄÜ:Èí¼þ´ÖÂÔÑÓÊ±1us
-void ADS1255_delayms(u16 time);//¹¦ÄÜ:Èí¼þ´ÖÂÔÑÓÊ±1ms
 
 u8 ADS1255_Init(void);         //¹¦ÄÜ:¼Ä´æÆ÷ÉèÖÃ³õÊ¼»¯,Èç¹û³õÊ¼»¯³É¹¦·µ»Ø0£¬Ê§°Ü·µ»Ø1
 u32 ADS1255_Read_a_Data(void); //¹¦ÄÜ:¶ÁÒ»´Î24Î»×ª»¯Êý¾Ý
@@ -46,6 +60,8 @@ u8 ADS1255_read_reg(u8 ADS1255_command);                   //¹¦ÄÜ:ÏòADS1255ÖÐ¶ÔÓ
 
 void ADS1255_write_bit(u8 temp);//¹¦ÄÜ:Ð´Ò»×Ö½ÚÊý¾Ý
 u8 ADS1255_read_bit(void);      //¹¦ÄÜ:¶ÁÒ»×Ö½ÚÊý¾Ý
+
+double ReadASingleData(u8 AINP,u8 AINN); //¶ÁÈ¡Ò»´Îµ±Ç°²ÉÑùµçÑ¹Öµ
 
 //---------------ÃüÁîº¯Êý-----------------------------//
 void ADS1255_RDATA(void);    //¹¦ÄÜ:¶Áµ¥´ÎÊý¾ÝÃüÁî

@@ -1,64 +1,36 @@
 #include "ADS1255.h"
+#include "Printf_Uart.h"
+#include "APP\Math\My_Math.h"
 
 void ADS1255_GPIO_Init(void)//初始化
 {
   	GPIO_InitTypeDef GPIO_InitDataBus;
-    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOF, ENABLE);
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+    RCC_AHB1PeriphClockCmd(ADS1255_SCLK_GPIO_CLK | ADS1255_DIN_GPIO_CLK | ADS1255_DOUT_GPIO_CLK | ADS1255_DRDY_GPIO_CLK | ADS1255_CS_GPIO_CLK, ENABLE);
 
-	//ADS1255
-  	GPIO_InitDataBus.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_4 ;
-	//                            DOUT		     DRDY
+	//ADS1255 DOUT		     DRDY    INIT
   	GPIO_InitDataBus.GPIO_Mode = GPIO_Mode_IN;//输入
+  	GPIO_InitDataBus.GPIO_Speed = GPIO_Speed_50MHz; 
+
+    GPIO_InitDataBus.GPIO_Pin = ADS1255_DOUT_GPIO_PIN;
+  	GPIO_Init(ADS1255_DOUT_GPIO_PORT, &GPIO_InitDataBus);
+ 	GPIO_InitDataBus.GPIO_Pin = ADS1255_DRDY_GPIO_PIN ;
+    GPIO_Init(ADS1255_DRDY_GPIO_PORT, &GPIO_InitDataBus);
+	
+	//ADS1255   SCLK          DIN          CS      INIT       
+	GPIO_InitDataBus.GPIO_Mode = GPIO_Mode_OUT;//推挽输出
+    GPIO_InitDataBus.GPIO_OType = GPIO_OType_PP;
+  	GPIO_InitDataBus.GPIO_Speed = GPIO_Speed_50MHz;   
+    GPIO_InitDataBus.GPIO_PuPd = GPIO_PuPd_DOWN;
     
-  	GPIO_InitDataBus.GPIO_Speed = GPIO_Speed_50MHz;   
-  	GPIO_Init(GPIOF, &GPIO_InitDataBus); 	
-	
-	GPIO_InitDataBus.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_3 | GPIO_Pin_5 | GPIO_Pin_6;
-	//                            SCLK          DIN          CS           REST          SYNC             
-	GPIO_InitDataBus.GPIO_Mode = GPIO_Mode_OUT;//推挽输出
-    GPIO_InitDataBus.GPIO_OType = GPIO_OType_PP;
-  	GPIO_InitDataBus.GPIO_Speed = GPIO_Speed_50MHz;   
-    GPIO_InitDataBus.GPIO_PuPd = GPIO_PuPd_UP;
-  	GPIO_Init(GPIOF, &GPIO_InitDataBus);  //初始化B1
-	
-	GPIO_InitDataBus.GPIO_Pin = GPIO_Pin_4;   
-	GPIO_InitDataBus.GPIO_Mode = GPIO_Mode_OUT;//推挽输出
-    GPIO_InitDataBus.GPIO_OType = GPIO_OType_PP;
-    GPIO_InitDataBus.GPIO_PuPd = GPIO_PuPd_UP;
-  	GPIO_InitDataBus.GPIO_Speed = GPIO_Speed_50MHz;   
-  	GPIO_Init(GPIOA, &GPIO_InitDataBus);  //LED
+    GPIO_InitDataBus.GPIO_Pin = ADS1255_SCLK_GPIO_PIN;
+  	GPIO_Init(ADS1255_SCLK_GPIO_PORT, &GPIO_InitDataBus);
+    GPIO_InitDataBus.GPIO_Pin = ADS1255_DIN_GPIO_PIN;
+  	GPIO_Init(ADS1255_DIN_GPIO_PORT, &GPIO_InitDataBus);
+    GPIO_InitDataBus.GPIO_Pin = ADS1255_CS_GPIO_PIN;
+  	GPIO_Init(ADS1255_CS_GPIO_PORT, &GPIO_InitDataBus);
 	
 }
 
-
-/**********************************************************************/
-/****************************************
-延时uS  
-*****************************************/
-
-void ADS1255_delayus(u16 time)						  
-{
-	u16 i=0;
-	while(time--)
-	{
-		i=3;
-		while(i--);
-  }
-}
-
-/****************************************
-功能：延时Ms
-*****************************************/
-void ADS1255_delayms(u16 time)
-{
- u16 i;
- while(time--)
- {
-	 i=4000;
-	 while(i--);
- }  
-}
 
 /****************************************
 功能：写一字节数据
@@ -75,9 +47,9 @@ void ADS1255_write_bit(u8 temp)
 		else
 			ADS1255_Write_DIN_L;
 		temp=temp<<1;
-		ADS1255_delayus(1);	 
+		delay_us(1);	 
 		ADS1255_Write_SCLK_L;
-		ADS1255_delayus(1);
+		delay_us(1);
 	}
 }
 
@@ -93,10 +65,10 @@ u8 ADS1255_read_bit(void)
 	{
 		ADS1255_Write_SCLK_H;
 		date=date<<1;
-		ADS1255_delayus(1);
+		delay_us(1);
 		ADS1255_Write_SCLK_L;
 		date= date | ADS1255_Read_DOUT;
-		ADS1255_delayus(1);
+		delay_us(1);
 	}
   return date;
 }
@@ -237,7 +209,7 @@ void ADS1255_write_reg(u8 ADS1255_command,u8 ADS1255_data)
 	ADS1255_write_bit(ADS1255_command | 0x50);
 	ADS1255_write_bit(0x00);
 	ADS1255_write_bit(ADS1255_data);
-	ADS1255_delayms(2);
+	delay_ms(2);
 }
 
 
@@ -252,7 +224,7 @@ u8 ADS1255_read_reg(u8 ADS1255_command)
   while(ADS1255_Read_DRDY);
   ADS1255_write_bit(ADS1255_command | 0x10);
   ADS1255_write_bit(0x00);
-  ADS1255_delayus(50);
+  delay_us(200);
   reg_date=ADS1255_read_bit();
   return reg_date;
 }
@@ -275,48 +247,44 @@ u8 ADS1255_Init(void)
     ADS1255_GPIO_Init();               //初始化ADS1255GPIO
                                                     
 	ADS1255_Write_CS_H;
-	ADS1255_Write_SYNC_H;
 	ADS1255_Write_SCLK_L;
-	ADS1255_Write_RST_L;
-	ADS1255_delayms(1);
-	ADS1255_Write_RST_H;
-	ADS1255_delayms(1);
+	delay_ms(1);
 	ADS1255_Write_CS_L;	
-	ADS1255_delayms(1);												
+	delay_ms(1);												
 													
 	ADS1255_write_reg(0x00,ADS1255_reg_Init[0]);//状态寄存器初始化
-	ADS1255_delayus(1);
+	delay_us(1);
 	
 	ADS1255_write_reg(0x01,ADS1255_reg_Init[1]);//模拟多路选择器初始化
-	ADS1255_delayus(1);
+	delay_us(1);
 	
 	ADS1255_write_reg(0x02,ADS1255_reg_Init[2]);//AD控制寄存器初始化
-	ADS1255_delayus(1);
+	delay_us(1);
 	
 	ADS1255_write_reg(0x03,ADS1255_reg_Init[3]);//数据速度寄存器初始化	
-	ADS1255_delayus(1);
+	delay_us(1);
 	
 	ADS1255_write_reg(0x04,ADS1255_reg_Init[4]);//I/O控制寄存器初始化
-	ADS1255_delayus(1);
+	delay_us(1);
 	
   if(ADS1255_reg_Init[1] != ADS1255_read_reg(0x01))  ReturnData = 1;
 
   if(ADS1255_reg_Init[2] != ADS1255_read_reg(0x02))  ReturnData = 1;
-	ADS1255_delayus(1);
+	delay_us(1);
 	
   if(ADS1255_reg_Init[3] != ADS1255_read_reg(0x03))  ReturnData = 1;
-	ADS1255_delayus(1);
+	delay_us(1);
 	
   if(ADS1255_reg_Init[4] != ADS1255_read_reg(0x04))  ReturnData = 1;
-	ADS1255_delayus(1);
+	delay_us(1);
 	
 	while(ADS1255_Read_DRDY);	
 	ADS1255_SELFCAL();	//补偿和增益自校准
-    ADS1255_delayus(5);
+    delay_us(5);
 	ADS1255_SYNC();     //AD转换同步
-	ADS1255_delayms(20);
+	delay_ms(20);
 	ADS1255_WAKEUP();   //退出待机模式
-	ADS1255_delayus(5);	
+	delay_us(5);	
 	
 	return(ReturnData);
 }
@@ -357,7 +325,37 @@ double ADS1255_DataFormatting(u32 Data , double Vref ,u8 PGA)
 
 
 
+/****************************************************
+功能：单次单通道采集数据并把数据发送到上位机,AINP为高输入通道，AINN是低输入通道，输入0-7
+****************************************************/
+double ReadASingleData(u8 AINP,u8 AINN)
+{
+	double ReadVoltage[9];
+	u32 Data;
+	u16 i;
+	
+	ADS1255_write_reg(0x01,(AINP<<4) | AINN );//通道选择器配置为A0为差分输入P,A1为差分输入N 
+	ADS1255_write_reg(0x03,0x23);//数据速度2.5SPS
+	ADS1255_SELFCAL();	//补偿和增益自校准
+	delay_us(5);
+	ADS1255_SYNC();     //AD转换同步
+	delay_ms(20);
+	ADS1255_WAKEUP();   //退出待机模式
+	delay_us(5);	
+	
+	for(i=0;i<9;i++) //采集9次数据
+	{
+		ADS1255_RDATA();             //功能:读单次数据命令
+		delay_us(20);         //至少延时50个ADS1256的时钟周期
+		Data = ADS1255_Read_a_Data();//读取AD采样的二进制值
+		ReadVoltage[i] = ADS1255_DataFormatting( Data , 2.5 , 1);//参考电压2.5V,内置增益1倍 
+        //u1_printf("%f\r\n",ReadVoltage);
+		//DataUart(ReadVoltage);	     //把电压值发送到上位机
+	}
+    DBubble_Sort(ReadVoltage, 9);
+    return ReadVoltage[4];
 
+}
 
 
 

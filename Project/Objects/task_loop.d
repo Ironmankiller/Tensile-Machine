@@ -63,3 +63,5 @@
 .\objects\task_loop.o: ..\Code\BSP\MCU\ADC\ADC.h
 .\objects\task_loop.o: ..\Code\BSP\ESCON\ESCON.h
 .\objects\task_loop.o: ..\Code\BSP\Motor_Drive\Moto_Drive.h
+.\objects\task_loop.o: ..\Code\BSP\ADS1255\ADS1255.h
+.\objects\task_loop.o: ..\Code\BSP\SYSTEM\delay\delay.h
