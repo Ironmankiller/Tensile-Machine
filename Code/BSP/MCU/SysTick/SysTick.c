@@ -1,7 +1,4 @@
-
-#include "stm32f4xx.h"
-#include "BSP\Time\Time.h"
-#include "APP\Task_Loop\Task_Loop.h"
+#include "sys.h"
 
 // cycles per microsecond
 volatile uint32_t usTicks = 0;

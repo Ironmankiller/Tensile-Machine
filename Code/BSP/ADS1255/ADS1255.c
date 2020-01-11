@@ -1,6 +1,5 @@
 #include "ADS1255.h"
-#include "Printf_Uart.h"
-#include "APP\Math\My_Math.h"
+#include "sys.h"
 
 void ADS1255_GPIO_Init(void)//初始化
 {
@@ -279,6 +278,10 @@ u8 ADS1255_Init(void)
 	delay_us(1);
 	
 	while(ADS1255_Read_DRDY);	
+    
+    ADS1255_write_reg(0x01,(0x01<<4) | 0x00 );//通道选择器配置为A0为差分输入P,A1为差分输入N 
+	ADS1255_write_reg(0x03,0xA1);//数据速度1000SPS
+
 	ADS1255_SELFCAL();	//补偿和增益自校准
     delay_us(5);
 	ADS1255_SYNC();     //AD转换同步
@@ -334,15 +337,6 @@ double ReadASingleData(u8 AINP,u8 AINN)
 	u32 Data;
 	u16 i;
 	
-	ADS1255_write_reg(0x01,(AINP<<4) | AINN );//通道选择器配置为A0为差分输入P,A1为差分输入N 
-	ADS1255_write_reg(0x03,0x23);//数据速度2.5SPS
-	ADS1255_SELFCAL();	//补偿和增益自校准
-	delay_us(5);
-	ADS1255_SYNC();     //AD转换同步
-	delay_ms(20);
-	ADS1255_WAKEUP();   //退出待机模式
-	delay_us(5);	
-	
 	for(i=0;i<9;i++) //采集9次数据
 	{
 		ADS1255_RDATA();             //功能:读单次数据命令
@@ -352,7 +346,7 @@ double ReadASingleData(u8 AINP,u8 AINN)
         //u1_printf("%f\r\n",ReadVoltage);
 		//DataUart(ReadVoltage);	     //把电压值发送到上位机
 	}
-    DBubble_Sort(ReadVoltage, 9);
+    Insert_Sort(ReadVoltage, 9);
     return ReadVoltage[4];
 
 }

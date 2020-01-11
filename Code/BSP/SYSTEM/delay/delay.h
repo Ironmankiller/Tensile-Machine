@@ -17,4 +17,4 @@ void delay_ms(volatile uint32_t nTime);
 * 获取系统时间 单位us
 * 两次获取若大于u32/1000(us),则两次差值溢出，不可取
 **********************************************/
-__INLINE uint32_t GetSysTime_us(void);
+__inline uint32_t GetSysTime_us(void);

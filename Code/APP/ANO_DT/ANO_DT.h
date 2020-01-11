@@ -46,4 +46,6 @@ void ANO_DT_Send_Senser(s16 a_x,s16 a_y,s16 a_z,
 
 void ANO_DT_Do(void);
 
+uint8_t ANO_DT_Data_Receive_Prepare(uint8_t data);
+
 #endif /* __ANO_DT_H */

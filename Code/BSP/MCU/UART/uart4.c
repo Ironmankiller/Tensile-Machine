@@ -1,13 +1,5 @@
 #include "sys.h"
 #include "uart4.h"
-#include "stdarg.h"
-#include "stdio.h"
-#include "string.h"
-#include "stm32f4xx.h"
-#include "includes.h"
-#include "My_Flag.h"
-#include "BSP\HMI\HMI.h"
-#include "BSP\Motor_Drive\Servo_Moto.h"
 //////////////////////////////////////////////////////////////////////////////////
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
 //ALIENTEK STM32F407开发板
@@ -51,9 +43,9 @@ Flag Flag_UART4_RX = Not_Ready;
                 if (res != 0x0a)UART4_RX_STA = 0;//接收错误,重新开始
                 else
                 {
-                    uint16_t Uart_Len = 0;  //数据长度
+                    //uint16_t Uart_Len = 0;  //数据长度
                     UART4_RX_STA |= 0x8000;	//接收完成了 
-                    Uart_Len = UART4_RX_STA & 0X3FFF;
+                    //Uart_Len = UART4_RX_STA & 0X3FFF;
                     //请在这里添加接收字符处理函数
 
 

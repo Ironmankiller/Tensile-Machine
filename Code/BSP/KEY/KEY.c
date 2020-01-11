@@ -1,8 +1,5 @@
-#include "stm32f4xx.h"
 #include "sys.h"
 #include "KEY.h"
-#include "delay.h"
-#include "BSP\BEEP\BEEP.h"
 
 #define KEY2 PAin(4)
 #define KEY3 PAin(5)

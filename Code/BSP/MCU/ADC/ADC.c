@@ -1,5 +1,5 @@
 #include "ADC.h"
-#include "delay.h"
+#include "sys.h"
 
 //初始化ADC															   
 void  Adc_Init(void)

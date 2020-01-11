@@ -1,25 +1,6 @@
-#include "stm32f4xx.h"
 #include "OLED.h"
-#include <stdio.h>
 #include "OLED_Fonts.h"  	 
-#include "delay.h"
 #include "sys.h"
-
-//-----------------OLED端口定义---------------- 
-#define OLED_RST_Clr()      PDout(5) = 0    //RST
-#define OLED_RST_Set()      PDout(5) = 1    //RST
-
-#define OLED_RS_Clr()       PDout(4) = 0    //DC
-#define OLED_RS_Set()       PDout(4) = 1    //DC
-
-#define OLED_SCLK_Clr()     PDout(7) = 0    //SCL D0
-#define OLED_SCLK_Set()     PDout(7) = 1    //SCL
-
-#define OLED_SDIN_Clr()     PDout(6) = 0    //SDA D1
-#define OLED_SDIN_Set()     PDout(6) = 1    //SDA
-
-#define OLED_CMD  0	//写命令
-#define OLED_DATA 1	//写数据
 
 
 //OLED的显存
@@ -52,16 +33,26 @@ void OLED_Init(void)
     /* IO初始化 */
     GPIO_InitTypeDef  GPIO_InitStructure;
 
-    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+    RCC_AHB1PeriphClockCmd(OLED_RST_GPIO_CLK|OLED_RS_GPIO_CLK|OLED_SCLK_GPIO_CLK|OLED_SDIN_GPIO_CLK, ENABLE);
 
     //GPIO初始化设置
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;       //普通输出模式
     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;      //推挽输出
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;        //上拉
-    GPIO_Init(GPIOD, &GPIO_InitStructure);              //初始化GPIO
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;   //上拉
+    
+    GPIO_InitStructure.GPIO_Pin = OLED_RST_GPIO_PIN;
+    GPIO_Init(OLED_RST_GPIO_PORT, &GPIO_InitStructure);    //初始化GPIO
 
+    GPIO_InitStructure.GPIO_Pin = OLED_RS_GPIO_PIN;
+    GPIO_Init(OLED_RS_GPIO_PORT, &GPIO_InitStructure);
+    
+    GPIO_InitStructure.GPIO_Pin = OLED_SCLK_GPIO_PIN;
+    GPIO_Init(OLED_SCLK_GPIO_PORT, &GPIO_InitStructure);
+    
+    GPIO_InitStructure.GPIO_Pin = OLED_SDIN_GPIO_PIN;
+    GPIO_Init(OLED_SDIN_GPIO_PORT, &GPIO_InitStructure);
+    
     OLED_SCLK_Set();
     OLED_SDIN_Set();
     OLED_RS_Set();

@@ -1,8 +1,5 @@
 #include "pid.h"
-#include "APP\Math\My_Math.h"
-#include "fuzzy.h"
-#include "BSP\MCU\UART\usart3.h"
-#include "BSP\MPU6050\MPU6050.h"
+#include "sys.h"
 /**************************************************************************
 函数功能：更新PID参数
 **************************************************************************/

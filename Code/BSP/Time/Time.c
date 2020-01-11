@@ -1,7 +1,5 @@
-#include <string.h>
-#include <stdint.h>
 #include "Time.h"
-#include "stm32f4xx.h"
+#include "sys.h"
 
 
 System_Time_TypeDef System_Time;    //系统时间
@@ -59,17 +57,17 @@ volatile float Cycle_T[GET_TIME_NUM][3];
 
 enum
 {
-    NOW = 0,
-    OLD,
-    NEW,
+    NOWTIME = 0,
+    OLDTIME,
+    NEWTIME,
 };
 
 float Get_Cycle_T(uint8_t item)
 {
-    Cycle_T[item][OLD] = Cycle_T[item][NOW];	//上一次的时间
-    Cycle_T[item][NOW] = GetSysTime_us() / 1000000.0f; //本次的时间
-    Cycle_T[item][NEW] = ((Cycle_T[item][NOW] - Cycle_T[item][OLD]));//间隔的时间（周期）
-    return Cycle_T[item][NEW];
+    Cycle_T[item][OLDTIME] = Cycle_T[item][NOWTIME];	//上一次的时间
+    Cycle_T[item][NOWTIME] = GetSysTime_us() / 1000000.0f; //本次的时间
+    Cycle_T[item][NEWTIME] = ((Cycle_T[item][NOWTIME] - Cycle_T[item][OLDTIME]));//间隔的时间（周期）
+    return Cycle_T[item][NEWTIME];
 }
 
 void Cycle_Time_Init(void)

@@ -1,6 +1,5 @@
 #include "Encoder.h"
-#include "stm32f4xx.h"
-#include "BSP\Time\Time.h"
+#include "sys.h"
 
 /**************************************************************************
 函数功能：把TIM3初始化为编码器接口模式

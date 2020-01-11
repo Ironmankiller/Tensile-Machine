@@ -18,18 +18,18 @@
 #define ESCON_POS                        PBout(8) = 1        //电机正转
 #define ESCON_NEG                        PBout(8) = 0        //电机反转
 //ESCON PWMIO初始化
-#define ESCON_TIM_GPIO_PORT              GPIOB
-#define ESCON_TIM_GPIO_Pin               GPIO_Pin_5
-#define ESCON_TIM_GPIO_PINSOURCE         GPIO_PinSource5
-#define ESCON_TIM_GPIO_CLK               RCC_AHB1Periph_GPIOB
+#define ESCON_TIM_GPIO_PORT              GPIOC
+#define ESCON_TIM_GPIO_Pin               GPIO_Pin_6
+#define ESCON_TIM_GPIO_PINSOURCE         GPIO_PinSource6
+#define ESCON_TIM_GPIO_CLK               RCC_AHB1Periph_GPIOC
 //ESCON PWM初始化
 #define ESCON_TIM                        TIM3
 #define ESCON_TIM_CLK_INIT               RCC_APB1PeriphClockCmd
 #define ESCON_TIM_CLK                    RCC_APB1Periph_TIM3
 #define ESCON_TIM_AF                     GPIO_AF_TIM3
-#define ESCON_TIM_OCInit                 TIM_OC2Init
-#define ESCON_TIM_OCPreloadConfig        TIM_OC2PreloadConfig   
-#define ESCON_PWM                        TIM3->CCR2          //PA8设置pwm
+#define ESCON_TIM_OCInit                 TIM_OC1Init
+#define ESCON_TIM_OCPreloadConfig        TIM_OC1PreloadConfig   
+#define ESCON_PWM                        TIM3->CCR1          //PA8设置pwm
 
 /**********************************************
 * 电机初始化

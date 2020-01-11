@@ -22,14 +22,8 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include "stm32f4xx.h"
-#include <stdint.h>
-#include <string.h>
-#include "delay.h"
-#include "includes.h"
-#include "APP\ANO_DT\ANO_DT_User_Settings.h"
-#include "APP\ANO_DT\ANO_DT.h"
-#include "BSP\MCU\FLASH\stmflash.h"
-#include "BSP\SYSTEM\My_Flag.h"
+#include "sys.h"
+
 
 /* Private typedef -----------------------------------------------------------*/
 

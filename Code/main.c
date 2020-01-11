@@ -1,12 +1,4 @@
-#include <stdint.h>
-#include <stdio.h>
-#include "BSP\My_BSP.h"
-#include "APP\Task_Loop\Task_Loop.h"
-#include "APP\ANO_DT\ANO_DT.h"
-#include "BSP\Time\Time.h"
-#include "APP\Tensile\Tensile.h"
-#include "Printf_Uart.h"
-void ReadASingleData(u8 AINP,u8 AINN);
+#include "sys.h"
 static void System_Init(void);       // 系统初始化
 /**********************************************
 * 主函数 

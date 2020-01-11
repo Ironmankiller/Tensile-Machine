@@ -1,7 +1,79 @@
 #ifndef __SYS_H
 #define __SYS_H	 
 #include "stm32f4xx.h" 
- 
+
+#include <string.h>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+#include <stdint.h>
+#include "stdlib.h"
+#include "includes.h"
+#include "stdarg.h"
+#include "delay.h"
+
+
+
+#include "BSP\My_BSP.h"
+#include "BSP\Time\Time.h"
+#include "BSP\SYSTEM\My_Flag.h"
+#include "BSP\SYSTEM\usart\Printf_Uart.h"
+#include "BSP\MCU\UART\usart2.h"
+#include "BSP\MCU\UART\usart3.h"
+#include "BSP\MCU\UART\uart4.h"
+#include "BSP\MCU\UART\usart5.h"
+#include "BSP\MCU\EXTI\exti.h"
+#include "BSP\MCU\ADC\ADC.h"
+#include "BSP\MCU\SPI\SPI1.h"
+#include "BSP\MCU\SPI\SPI2.h"
+#include "BSP\MCU\IIC_Soft\IIC_Soft.h"
+#include "BSP\MCU\IIC2\IIC2.h"
+#include "BSP\MCU\Timer\Timer.h"
+#include "BSP\MCU\SysTick\SysTick.h"
+#include "BSP\MCU\FLASH\stmflash.h"
+
+#include "BSP\LED\LED.h"
+#include "BSP\OLED\OLED.h"
+#include "BSP\BEEP\BEEP.h"
+#include "BSP\KEY\KEY.h"
+#include "BSP\key\Key_Board.h"
+#include "BSP\Encoder\Encoder.h"
+#include "BSP\HMI\HMI.h"
+
+#include "BSP\Motor_Drive\Moto_Drive.h"
+#include "BSP\Motor_Drive\Step_Moto.h"
+#include "BSP\Motor_Drive\Steer_Moto.h"
+#include "BSP\Motor_Drive\Wind_Moto.h"
+
+#include "BSP\MPU6050\MPU6050.h"
+#include "BSP\MPU60502\MPU60502.h"
+#include "BSP\GY953\GY953.h"
+
+#include "BSP\NRF24L01\NRF24L01.h"
+#include "BSP\Mecanum\Mecanum.h"
+#include "BSP\ESCON\ESCON.h"
+#include "BSP\ADS1255\ADS1255.h"
+
+#include "APP\Task_Loop\Task_Loop.h"
+#include "APP\ANO_DT\ANO_DT_User_Settings.h"
+#include "APP\ANO_DT\ANO_DT.h"
+#include "APP\Display\Display.h"
+#include "APP\Math\My_Math.h"
+#include "APP\Control\Control.h"
+#include "APP\Control\fuzzy.h"
+#include "APP\Control\param.h"
+#include "APP\Control\Algorithm.h"
+#include "APP\Control\pid.h"
+#include "APP\Control\forward.h"
+#include "APP\ANO_DT\ANO_DT.h"
+#include "APP\IMU\ahrs.h"
+#include "APP\OpenMV\OpenMV.h"
+#include "APP\Tensile\Tensile.h"
+#include "APP\Car\Car.h"
+#include "APP\Pan_Tilt\Pan_Tilt.h"
+
+
+
 
 //0,不支持ucos
 //1,支持ucos

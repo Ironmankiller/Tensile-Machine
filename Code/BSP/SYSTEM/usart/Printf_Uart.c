@@ -1,15 +1,5 @@
 #include "Printf_Uart.h"	 
-#include "includes.h"
-#include "APP\Control\param.h"
-#include "APP\Car\Car.h"
-#include "BSP\Mecanum\Mecanum.h"
-#include "APP\Control\Control.h"
-#include "BSP\HMI\HMI.h"
-#include "APP\OpenMV\OpenMV.h"
-#include "BSP\Motor_Drive\Servo_Moto.h"
-#include "APP\Math\My_Math.h"
-#include "stdlib.h"
-#include "BSP\BEEP\BEEP.h"
+#include "sys.h"
 //////////////////////////////////////////////////////////////////////////////////	   
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
 //ALIENTEK STM32F407开发板

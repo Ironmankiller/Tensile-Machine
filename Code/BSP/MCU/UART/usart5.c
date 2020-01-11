@@ -1,17 +1,5 @@
 #include "sys.h"
 #include "usart5.h"
-#include <stdarg.h>
-#include <stdio.h>
-#include <string.h>
-#include "stm32f4xx.h"
-#include "APP\Control\param.h"
-#include "APP\Car\Car.h"
-#include "BSP\LED\LED.h"
-#include "APP\Control\Control.h"
-#include "APP\Math\My_Math.h"
-#include "APP\Task_Loop\Task_Loop.h"
-#include "APP\ANO_DT\ANO_DT.h"
-#include "BSP\HMI\HMI.h"
 
  u8  USART5_RX_BUF[USART5_MAX_RECV_LEN]; 		//接收缓冲,最大USART5_MAX_RECV_LEN字节
  u8  USART5_TX_BUF[USART5_MAX_SEND_LEN]; 		//发送缓冲,最大USART5_MAX_SEND_LEN字节

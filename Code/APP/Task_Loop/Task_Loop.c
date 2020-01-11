@@ -1,29 +1,5 @@
-#include "stm32f4xx.h"
-#include <stdio.h>
-#include <stdint.h>
-#include <string.h>
 #include "Task_Loop.h"
-#include "APP\ANO_DT\ANO_DT.h"
-#include "APP\Display\Display.h"
-#include "APP\Control\Control.h"
-#include "APP\Control\Algorithm.h"
-#include "APP\Control\pid.h"
-#include "APP\Tensile\Tensile.h"
-#include "BSP\Time\Time.h"
-#include "delay.h"
-#include "BSP\LED\LED.h"
-#include "BSP\KEY\KEY.h"
-#include "BSP\BEEP\BEEP.h"
-#include "BSP\HMI\HMI.h"
-#include "BSP\SYSTEM\usart\Printf_Uart.h"
-#include "BSP\MCU\UART\usart2.h"
-#include "BSP\MCU\UART\usart3.h"
-#include "BSP\MCU\UART\uart4.h"
-#include "BSP\MCU\UART\usart5.h"
-#include "BSP\MCU\ADC\ADC.h"
-#include "BSP\ESCON\ESCON.h"
-#include "BSP\ADS1255\ADS1255.h"
-
+#include "sys.h"
 
 /* 任务循环计时结构体 */
 typedef struct {
@@ -158,10 +134,10 @@ __INLINE static void Task_10ms(void)
 __INLINE static void Task_20ms(void)
 {
     /* 发送调试数据到上位机 */
-    ANO_DT_Send_Senser(
-    0, 0, 0,
-	0 ,0 , 0, 0,
-    0, 0, 0);
+//    ANO_DT_Send_Senser(
+//    0, 0, 0,
+//	0 ,0 , 0, 0,
+//    0, 0, 0);
 //    ANO_DT_Send_Status(EulerAngle.Roll, EulerAngle.Pitch, EulerAngle.Yaw, 0, 0, 1);
 
 }
@@ -178,7 +154,7 @@ __INLINE static void Task_50ms(void)
     LED_Blink(LED_1);
     
     /* 显示 */
-    
+    u1_printf("%f\r\n",Tensile.LVDT.position * (Tensile.LVDT.output_max - Tensile.LVDT.output_min)/Tensile.LVDT.range);
 
     /* 独立按键（调试用 比赛时慎用） */
     switch (KEY_Scan())

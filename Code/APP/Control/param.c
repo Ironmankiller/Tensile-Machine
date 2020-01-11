@@ -1,6 +1,5 @@
 #include "param.h"
-#include "pid.h"
-#include "forward.h"
+#include "sys.h"
 
 pid pid_velocity;
 pid pid_tension;

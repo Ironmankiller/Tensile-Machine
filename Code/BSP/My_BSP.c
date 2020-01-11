@@ -1,8 +1,8 @@
 //-----------------------------------------------------------------------------
 // MY_BSP.c
 //
-//  Created on	: 2016-7-14
-//      Author	: DGVY
+//  Created on	: 2019-7-14
+//      Author	: SPY
 //		version	: V1.0
 //		brief	:
 //-----------------------------------------------------------------------------
@@ -13,42 +13,8 @@
 // Includes
 //-----------------------------------------------------------------------------
 #include "My_BSP.h"
-#include "Printf_Uart.h"
-#include "delay.h"
 #include "sys.h"
-#include "BSP\LED\LED.h"
-#include "BSP\MCU\Timer\Timer.h"
-#include "BSP\Time\Time.h"
-#include "BSP\MCU\SysTick\SysTick.h"
-#include "BSP\Motor_Drive\Moto_Drive.h"
-#include "BSP\OLED\OLED.h"
-#include "BSP\Encoder\Encoder.h"
-#include "BSP\BEEP\BEEP.h"
-#include "BSP\KEY\KEY.h"
-#include "BSP\Motor_Drive\Moto_Drive.h"
-#include "BSP\MCU\UART\usart2.h"
-#include "BSP\MCU\UART\usart3.h"
-#include "BSP\MCU\UART\uart4.h"
-#include "BSP\MCU\UART\usart5.h"
-#include "BSP\MCU\IIC_Soft\IIC_Soft.h"
-#include "BSP\MCU\IIC2\IIC2.h"
-#include "BSP\key\Key_Board.h"
-#include "BSP\HMI\HMI.h"
-#include "BSP\MPU6050\MPU6050.h"
-#include "BSP\MPU60502\MPU60502.h"
-#include "BSP\Motor_Drive\Step_Moto.h"
-#include "BSP\Motor_Drive\Steer_Moto.h"
-#include "BSP\Motor_Drive\Wind_Moto.h"
-#include "APP\IMU\ahrs.h"
-#include "BSP\MCU\SPI\SPI1.h"
-#include "BSP\NRF24L01\NRF24L01.h"
-#include "BSP\MCU\EXTI\exti.h"
-#include "BSP\PS2\PS2.h"
-#include "BSP\GY953\GY953.h"
-#include "BSP\Mecanum\Mecanum.h"
-#include "BSP\ESCON\ESCON.h"
-#include "BSP\MCU\ADC\ADC.h"
-#include "BSP\ADS1255\ADS1255.h"
+
 //-----------------------------------------------------------------------------
 // Private Define
 //-----------------------------------------------------------------------------
@@ -79,9 +45,6 @@ void BSP_Init(uint32_t uart_bound, uint8_t delay_sysclk)
 {
     /* 设置系统中断优先级分组2 */
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-    
-    RCC_ClocksTypeDef RCC_Clocks;
-    RCC_GetClocksFreq(&RCC_Clocks);
 
     /* 清空系统时间 */
     System_Tiem_Clear();
@@ -133,6 +96,7 @@ void BSP_Init(uint32_t uart_bound, uint8_t delay_sysclk)
     delay_ms(900);
     Beep_Play(100);
     LED_ALL_OFF();
+    //while(1);
 }
 
 /******************* (C) COPYRIGHT 2016 DGVY **********END OF FILE***********/

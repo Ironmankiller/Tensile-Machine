@@ -1,12 +1,5 @@
-
-#include <stdio.h>
 #include "HMI.h"
-#include "BSP\LED\LED.h"
-#include "APP\ANO_DT\ANO_DT.h"
-#include "BSP\SYSTEM\usart\Printf_Uart.h"
-#include "BSP\Motor_Drive\Servo_Moto.h"
-#include "BSP\TIME\TIME.h"
-#include "APP\OpenMV\OpenMV.h"
+#include "sys.h"
 
 
 u8 HMI_Send_Buf[USART_MAX_SEND_LEN];
@@ -245,7 +238,7 @@ void UART5_IRQHandler(void)
 				{
 					USART_RX_STA |= 0x8000;	//接收完成了 
 					USART_RX_STA = 0;
-					sprintf(USART_RX_BUF, "%s", USART_RX_BUF_tset);
+					sprintf((char *)USART_RX_BUF, "%s", USART_RX_BUF_tset);
 					memset(USART_RX_BUF_tset,0, USART_MAX_RECV_LEN);
 					Flag_UART_RX = Ready;
 				}

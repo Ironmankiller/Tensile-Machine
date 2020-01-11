@@ -1,18 +1,6 @@
-#include "BSP\Time\Time.h"
-#include <stdio.h>
-#include "APP\Control\pid.h"
-#include "APP\Control\control.h"
-#include "forward.h"
-#include "param.h"
-#include "Algorithm.h"
-#include "BSP\SYSTEM\My_Flag.h"
-#include "APP\Math\My_Math.h"
-#include "BSP\MCU\UART\usart3.h"
-#include "BSP\MCU\UART\usart2.h"
-#include "APP\Pan_Tilt\Pan_Tilt.h"
-#include "BSP\SYSTEM\usart\Printf_Uart.h"
-#include "APP\Tensile\Tensile.h"
-#include "BSP\ESCON\ESCON.h"
+#include "Control.h"
+#include "sys.h"
+
 
 Flag Init_flag = MY_TRUE;
 /**********************************************

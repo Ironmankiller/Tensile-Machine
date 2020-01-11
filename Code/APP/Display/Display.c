@@ -1,11 +1,5 @@
-#include "BSP\OLED\OLED.h"
-#include "BSP\Time\Time.h"
-#include "APP\IMU\ahrs.h"
-#include <stdio.h>
-#include "APP\Control\Control.h"
-#include "BSP\Encoder\Encoder.h"
-#include "APP\Control\param.h"
-#include "BSP\Mecanum\Mecanum.h"
+#include "sys.h"
+#include "Display.h"
 
 /**********************************************
 * 显示时间

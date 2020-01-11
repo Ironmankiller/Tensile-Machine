@@ -140,3 +140,5 @@ Bits 3-0 **DI0[3:0]**: Status of Digital I/O Pins D3, D2, D1, D0/CLKOUT
 &emsp; Reading these bits will show the state of the corresponding digital I/O pin, whether if the pin is configured as an input or output by DIR3-DIR0. When the digital I/O pin is configured as an output by the DIR bit, writing to the corresponding DIO bit will set the output state. When the digital I/O pin is configured as an input by the DIR bit, writing to the corresponding DIO bit will have no effect. When DO/CLKOUT is configured as an output and CLKOUT is enabled (using CLK1, CLK0 bits in the ADCON register), writing to DIO0 will have no effect.
 ###12月4日
 添加了拉伸实验机的速度控制代码，重构了拉伸试验机的结构体，ADS1255可以读出数据。
+###1月11日
+重构了BSP的初始化代码，并将全部头文件包含代码放入sys.h文件

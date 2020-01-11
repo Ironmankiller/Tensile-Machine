@@ -1,12 +1,6 @@
 #include "sys.h"
 #include "usart3.h"
-#include "stdarg.h"
-#include "stdio.h"
-#include "string.h"
-#include "stm32f4xx.h"
-#include "Printf_Uart.h"
-#include "BSP\HMI\HMI.h"
-#include "APP\OpenMV\OpenMV.h"
+
 
 //////////////////////////////////////////////////////////////////////////////////
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
@@ -52,9 +46,9 @@ void USART3_IRQHandler(void)
                 if (res != 0x0a)USART3_RX_STA = 0;//接收错误,重新开始
                 else
                 {
-                    uint16_t Uart_Len = 0;  //数据长度
+                    //uint16_t Uart_Len = 0;  //数据长度
                     USART3_RX_STA |= 0x8000;	//接收完成了 
-                    Uart_Len = USART3_RX_STA & 0X3FFF;
+                    //Uart_Len = USART3_RX_STA & 0X3FFF;
                     //请在这里添加接收字符处理函数
 
                     //u1_printf("%d\r\n",USART3_RX_BUF);

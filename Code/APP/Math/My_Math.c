@@ -1,8 +1,5 @@
 #include "My_Math.h"
-#include <stdint.h>
-#include <stdlib.h>
-#include <stdio.h>
-
+#include "sys.h"
 
 /********************************
  *º¯ÊýÃû£ºmyatoi
@@ -198,6 +195,20 @@ void DBubble_Sort(double _data[], uint32_t size)
                 _data[j] = _data[i];
                 _data[i] = temp;
             }
+        }
+    }
+}
+
+void Insert_Sort(double _data[], uint32_t size) {
+    
+    int i = 0;
+    int j = 0;
+    double temp = 0.0;
+    for(i = 1; i < size; i++) {
+        for(j = i; j>0&&_data[j]<_data[j-1]; j--){
+            temp = _data[j];
+            _data[j] = _data[j-1];
+            _data[j-1] = temp;
         }
     }
 }

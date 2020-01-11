@@ -79,6 +79,7 @@ void quicksort(int array[], int begin, int end);
 
 void Bubble_Sort(uint32_t _data[], uint32_t size);
 void DBubble_Sort(double _data[], uint32_t size);
+void Insert_Sort(double _data[], uint32_t size);
 
 float fast_atan2(float y, float x);
 

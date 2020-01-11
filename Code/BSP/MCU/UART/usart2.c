@@ -1,10 +1,5 @@
 #include "usart2.h"	 
-#include "includes.h"
-#include "APP\Control\param.h"
-#include "APP\Car\Car.h"
-#include "BSP\Mecanum\Mecanum.h"
-#include "APP\Control\Control.h"
-#include "BSP\HMI\HMI.h"
+#include "sys.h"
 //////////////////////////////////////////////////////////////////////////////////	   
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
 //ALIENTEK STM32F407开发板
